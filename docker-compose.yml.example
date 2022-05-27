@@ -1,0 +1,32 @@
+services:
+    app:
+        build:
+            context: ./
+            dockerfile: dockerfiles/app/Dockerfile
+        volumes:
+            - './:/var/www'
+        restart: always
+        ports:
+            - '8000:80'
+            - '3000:3000'
+            - '8080:8080'
+        links:
+            - mysql
+        environment:
+            - "TZ=America/Guatemala"
+    mysql:
+        build:
+            context: ./
+            dockerfile: dockerfiles/mysql/mysql.docker
+        volumes:
+            - 'mysql-data:/var/lib/mysql'
+        restart: always
+        environment:
+            - "TZ=America/Guatemala"
+            - MYSQL_ROOT_PASSWORD=pandita
+            - MYSQL_DATABASE=core
+        ports:
+            - '3306:3306'
+volumes:
+    mysql-data:
+        driver: 'local'
