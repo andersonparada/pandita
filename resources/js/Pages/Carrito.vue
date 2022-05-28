@@ -44,9 +44,26 @@
               </tr>
             </tbody>
           </table>
-
+          <div class="form-floating mb-3">
+            <input type="number" v-model="nit" :class="errorClass('nit')" />
+            <label class="form-label">NIT</label>
+            <span class="text-danger" v-if="errors.nit">{{
+              errors.nit[0]
+            }}</span>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              v-model="direccion"
+              :class="errorClass('direccion')"
+            />
+            <label class="form-label">Direccion</label>
+            <span class="text-danger" v-if="errors.direccion">{{
+              errors.direccion[0]
+            }}</span>
+          </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" @click="finalizar">
+            <button class="btn btn-primary" @click="generarVenta">
               FINALIZAR
             </button>
           </div>
@@ -61,10 +78,13 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Swal from "sweetalert2";
+import { errorsMixin } from "@/mixins/errors.js";
 export default {
   components: {
     AppLayout,
   },
+  mixins: [errorsMixin],
   mounted() {
     if (localStorage.getItem("articulos")) {
       try {
@@ -77,6 +97,9 @@ export default {
   data() {
     return {
       articulos: [],
+      direccion: null,
+      nit: null,
+      errors: {},
     };
   },
   methods: {
@@ -91,6 +114,46 @@ export default {
       this.articulos.splice(key, 1);
       //lo guardamos en el localstorage
       this.saveArticulos();
+    },
+    mensajeToast: function (title, icon = "error") {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon,
+        title,
+      });
+    },
+    generarVenta: function () {
+      axios
+        .post("/facturas", {
+          articulos: this.articulos,
+          direccion: this.direccion,
+          nit: this.nit,
+        })
+        .then((res) => {
+          this.mensajeToast(
+            "Su compra ha sido procesada, gracias por utilizar nuestro servicio en linea!!",
+            "success"
+          );
+          localStorage.removeItem("articulos");
+        })
+        .catch((err) => {
+          if (err.response.status == 422) {
+            this.errors = err.response.data.errors;
+          } else {
+            this.mensajeToast(err.response.data);
+          }
+        });
     },
   },
   computed: {

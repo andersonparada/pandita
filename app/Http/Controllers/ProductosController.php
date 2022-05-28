@@ -34,7 +34,6 @@ class ProductosController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->precio      = $request->precio;
         $producto->activo      = $request->activo;
-        $producto->stock       = $request->stock;
 
         $imagen           = $request->file('file')->store('public/imagenes');
         $url              = Storage::url($imagen);

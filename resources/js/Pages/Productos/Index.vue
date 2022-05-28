@@ -12,14 +12,16 @@
           </inertia-link>
         </div>
         <div class="card-body">
-          <table class="table table-hover table-responsive" v-if="productos.length > 0">
+          <table
+            class="table table-hover table-responsive"
+            v-if="productos.length > 0"
+          >
             <thead>
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Precio</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Activo</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -28,8 +30,7 @@
                 <th scope="row">{{ producto.id }}</th>
                 <td>{{ producto.nombre }}</td>
                 <td>{{ producto.precio }}</td>
-                <td>{{ producto.stock }}</td>
-                <td>{{ producto.activo }}</td>
+                <td>{{ producto.activo ? "ACTIVO" : "INACTIVO" }}</td>
                 <td>
                   <inertia-link
                     :href="route('productos.edit', producto.id)"

@@ -31,7 +31,6 @@ class ProductoStoreRequest extends FormRequest
             'nombre'      => 'required',
             'descripcion' => 'required',
             'precio'      => 'required|min:1',
-            'stock'       => 'required',
             'activo'      => 'required',
             'file'        => 'required|image',
         ];
@@ -42,7 +41,6 @@ class ProductoStoreRequest extends FormRequest
         return [
             'nombre.required'      => 'El nombre es requerido',
             'descripcion.required' => 'La descripcion es requerido',
-            'stock.required'       => 'El stock es requerido',
             'precio.required'      => 'El precio es requerido',
             'precio.min'           => 'El precio debe ser mayor a 1',
             'file.require'         => 'El archivo es requerida',

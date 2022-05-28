@@ -195,7 +195,7 @@
     </nav>
 
     <!-- Page Content -->
-    <main class="py-3">
+    <main class="d-flex py-3 bg-white shadow-sm border-bottom">
       <slot></slot>
     </main>
   </div>

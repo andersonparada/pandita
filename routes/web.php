@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\VentasController;
 use Illuminate\Foundation\Application;
@@ -41,5 +42,6 @@ Route::middleware([
 
     Route::resource('productos', ProductosController::class, ['only' => ['index', 'edit', 'update', 'create', 'store']]);
     Route::resource('articulos-de-venta', VentasController::class, ['only' => ['index', 'show']]);
+    Route::resource('facturas', FacturasController::class, ['only' => ['store', 'show']]);
 
 });

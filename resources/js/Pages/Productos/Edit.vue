@@ -8,6 +8,9 @@
           :class="errorClass('nombre')"
         />
         <label class="form-label">Nombre</label>
+        <span class="text-danger" v-if="errors.nombre">{{
+          errors.nombre[0]
+        }}</span>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -16,6 +19,9 @@
           :class="errorClass('descripcion')"
         />
         <label class="form-label">Descripcion</label>
+        <span class="text-danger" v-if="errors.descripcion">{{
+          errors.descripcion[0]
+        }}</span>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -24,14 +30,9 @@
           :class="errorClass('precio')"
         />
         <label class="form-label">Precio</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input
-          type="number"
-          v-model="producto.stock"
-          :class="errorClass('stock')"
-        />
-        <label class="form-label">Stock</label>
+        <span class="text-danger" v-if="errors.precio">{{
+          errors.precio[0]
+        }}</span>
       </div>
       <div class="form-floating mb-3">
         <picture>
@@ -47,6 +48,9 @@
         <label class="form-check-label" for="inlineCheckChecked">{{
           textActive
         }}</label>
+        <span class="text-danger" v-if="errors.activo">{{
+          errors.activo[0]
+        }}</span>
       </div>
       <div class="d-flex flex-wrap align-items-start mb-3">
         <div class="me-3 bd-highlight d-inline-block">

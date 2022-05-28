@@ -52,22 +52,7 @@ export default {
     },
     emitirDatos: function () {
       if (this.cantidad == 0) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-
-        Toast.fire({
-          icon: "error",
-          title: "No puede agregar al carrito la cantidad 0",
-        });
+        this.mensajeToast("No puede agregar al carrito la cantidad 0");
         return;
       }
 
@@ -75,8 +60,26 @@ export default {
         producto: this.producto,
         cantidad: this.cantidad,
       };
-
+      this.mensajeToast("Aregado al carrito correctamente!!", "success");
       this.$emit("datos", data);
+    },
+    mensajeToast: function (title, icon = "error") {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon,
+        title,
+      });
     },
   },
 };

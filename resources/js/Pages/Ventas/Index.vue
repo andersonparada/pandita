@@ -1,22 +1,18 @@
 <template>
   <AppLayout title="Productos">
     <div class="container">
-      <div class="card">
-        <div class="card-body">
-          <div class="row" v-if="productos.length > 0">
-            <CardProducto
-              v-for="producto in productos"
-              :key="producto.id"
-              :producto="producto"
-              class="col-3"
-              @datos="obtenerData"
-            />
-          </div>
-          <h3 v-else>Actualmente no tenemos ningun producto a la venta</h3>
-          <ButtonFloat />
-          <br />
-        </div>
+      <div class="row" v-if="productos.length > 0">
+        <CardProducto
+          v-for="producto in productos"
+          :key="producto.id"
+          :producto="producto"
+          class="col-3"
+          @datos="obtenerData"
+        />
       </div>
+      <h3 v-else>Actualmente no tenemos ningun producto a la venta</h3>
+      <ButtonFloat />
+      <br />
     </div>
   </AppLayout>
 </template>

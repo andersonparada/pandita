@@ -9,6 +9,9 @@
             :class="errorClass('nombre')"
           />
           <label class="form-label">Nombre</label>
+          <span class="text-danger" v-if="errors.nombre">{{
+            errors.nombre[0]
+          }}</span>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -17,6 +20,9 @@
             :class="errorClass('descripcion')"
           />
           <label class="form-label">Descripcion</label>
+          <span class="text-danger" v-if="errors.descripcion">{{
+            errors.descripcion[0]
+          }}</span>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -25,14 +31,9 @@
             :class="errorClass('precio')"
           />
           <label class="form-label">Precio</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="number"
-            v-model="form.stock"
-            :class="errorClass('stock')"
-          />
-          <label class="form-label">Stock</label>
+          <span class="text-danger" v-if="errors.precio">{{
+            errors.precio[0]
+          }}</span>
         </div>
         <div class="form-floating mb-3">
           <input type="file" @input="form.file = $event.target.files[0]" />
@@ -46,6 +47,9 @@
           <label class="form-check-label" for="inlineCheckChecked">{{
             textActive
           }}</label>
+          <span class="text-danger" v-if="errors.activo">{{
+            errors.activo[0]
+          }}</span>
         </div>
         <progress
           v-if="form.progress"
@@ -86,7 +90,6 @@ export default {
       descripcion: null,
       precio: null,
       activo: true,
-      stock: 0,
       imagen: null,
       file: null,
     });
