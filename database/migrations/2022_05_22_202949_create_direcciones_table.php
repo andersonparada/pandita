@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('direcciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('estado_id');
+            $table->bigInteger('nit')->nullable();
             $table->text('direccion');
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('direcciones');
     }
 };

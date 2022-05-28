@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoStoreRequest;
+use App\Http\Requests\ProductoUpdateRequest;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -35,10 +36,9 @@ class ProductosController extends Controller
         $producto->activo      = $request->activo;
         $producto->stock       = $request->stock;
 
-        if ($request->file('file')) {
-            $url              = Storage::put('imagenes', $request->file('file'));
-            $producto->imagen = $url;
-        }
+        $imagen           = $request->file('file')->store('public/imagenes');
+        $url              = Storage::url($imagen);
+        $producto->imagen = $url;
 
         $producto->save();
 
@@ -50,7 +50,7 @@ class ProductosController extends Controller
         return Inertia::render('Productos/Edit', ['producto' => $producto]);
     }
 
-    public function update(ProductoStoreRequest $request, Producto $producto)
+    public function update(ProductoUpdateRequest $request, Producto $producto)
     {
         $producto->update($request->all());
         return Redirect::route('productos.index');

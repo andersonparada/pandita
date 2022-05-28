@@ -10,7 +10,7 @@ export const errorsMixin = {
     },
     computed: {
         hasErrors() {
-            return _.isEmpty(this.error)
+            return _.isEmpty(this.errors)
         }
     },
 }

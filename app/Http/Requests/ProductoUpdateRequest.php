@@ -13,6 +13,10 @@ class ProductoUpdateRequest extends FormRequest
      */
     public function authorize()
     {
+        if (auth()->user()->admin) {
+            return true;
+        }
+
         return false;
     }
 
@@ -24,7 +28,22 @@ class ProductoUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre'      => 'required',
+            'descripcion' => 'required',
+            'precio'      => 'required|min:1',
+            'stock'       => 'required',
+            'activo'      => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nombre.required'      => 'El nombre es requerido',
+            'descripcion.required' => 'La descripcion es requerido',
+            'stock.required'       => 'El stock es requerido',
+            'precio.required'      => 'El precio es requerido',
+            'precio.min'           => 'El precio debe ser mayor a 1',
         ];
     }
 }

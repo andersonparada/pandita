@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\VentasController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,5 +35,11 @@ Route::middleware([
         return Inertia::render('Inicio');
     })->name('inicio');
 
+    Route::get('/carrito', function () {
+        return Inertia::render('Carrito');
+    })->name('carrito');
+
     Route::resource('productos', ProductosController::class, ['only' => ['index', 'edit', 'update', 'create', 'store']]);
+    Route::resource('articulos-de-venta', VentasController::class, ['only' => ['index', 'show']]);
+
 });

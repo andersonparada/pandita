@@ -35,11 +35,8 @@
       </div>
       <div class="form-floating mb-3">
         <picture>
-          <img :src="`/storage/${form.imagen}`" />
+          <img :src="form.imagen" />
         </picture>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="file" @input="form.file = $event.target.files[0]" />
       </div>
       <div class="form-check form-check-inline mt-3">
         <input

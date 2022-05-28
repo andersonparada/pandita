@@ -45,6 +45,12 @@
             >
               Productos
             </jet-nav-link>
+            <jet-nav-link
+              :href="route('articulos-de-venta.index')"
+              :active="route().current('articulos-de-venta.index')"
+            >
+              Articulos
+            </jet-nav-link>
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -189,7 +195,7 @@
     </nav>
 
     <!-- Page Content -->
-    <main class="d-flex py-3 bg-white shadow-sm border-bottom">
+    <main class="py-3">
       <slot></slot>
     </main>
   </div>

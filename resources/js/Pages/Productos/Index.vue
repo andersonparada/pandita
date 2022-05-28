@@ -12,7 +12,7 @@
           </inertia-link>
         </div>
         <div class="card-body">
-          <table class="table table-hover" v-if="productos.length > 0">
+          <table class="table table-hover table-responsive" v-if="productos.length > 0">
             <thead>
               <tr>
                 <th scope="col">ID</th>
