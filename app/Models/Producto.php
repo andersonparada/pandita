@@ -9,8 +9,8 @@ class Producto extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
-    protected $casts = [
+    protected $hidden  = ['created_at', 'updated_at'];
+    protected $casts   = [
         'activo' => 'boolean',
     ];
 }

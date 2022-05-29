@@ -22,11 +22,7 @@
                 <td>{{ articulo.producto.descripcion }}</td>
                 <td>{{ articulo.producto.precio }}</td>
                 <td>
-                  <input
-                    type="number"
-                    class="form-control form-control-sm"
-                    v-model="articulo.cantidad"
-                  />
+                  <input type="number" class="form-control form-control-sm" v-model="articulo.cantidad" />
                 </td>
                 <td>{{ articulo.producto.precio * articulo.cantidad }}</td>
                 <td>
@@ -48,18 +44,14 @@
             <input type="number" v-model="nit" :class="errorClass('nit')" />
             <label class="form-label">NIT</label>
             <span class="text-danger" v-if="errors.nit">{{
-              errors.nit[0]
+                errors.nit[0]
             }}</span>
           </div>
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              v-model="direccion"
-              :class="errorClass('direccion')"
-            />
+            <input type="text" v-model="direccion" :class="errorClass('direccion')" />
             <label class="form-label">Direccion</label>
             <span class="text-danger" v-if="errors.direccion">{{
-              errors.direccion[0]
+                errors.direccion[0]
             }}</span>
           </div>
           <div class="d-grid gap-2">
@@ -135,7 +127,7 @@ export default {
     },
     generarVenta: function () {
       axios
-        .post("/facturas", {
+        .post("/pedidos", {
           articulos: this.articulos,
           direccion: this.direccion,
           nit: this.nit,
@@ -146,6 +138,7 @@ export default {
             "success"
           );
           localStorage.removeItem("articulos");
+          this.articulos = [];
         })
         .catch((err) => {
           if (err.response.status == 422) {

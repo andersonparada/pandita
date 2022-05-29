@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Estado extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

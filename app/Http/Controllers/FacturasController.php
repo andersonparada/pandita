@@ -3,19 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FacturaStoreRequest;
+use App\Models\Estado;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class FacturasController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //mostrar pedidos sin finalizar
+    public function index()
+    {
+        if (auth()->user()->admin == 1) {
+            $facturas = Factura::query()
+                ->where('estado_id', '!=', 3)
+                ->with('detalles.producto')
+                ->with('usuario')
+                ->with('estado')
+                ->get();
+        } else {
+            $facturas = Factura::query()
+                ->where('user_id', auth()->user()->id)
+                ->with('detalles.producto')
+                ->with('usuario')
+                ->with('estado')
+                ->get();
+        }
+
+        return Inertia::render('Facturas/Index', ['facturas' => $facturas]);
+    }
+
     public function store(FacturaStoreRequest $request)
     {
         DB::transaction(function () use ($request) {
@@ -34,8 +52,8 @@ class FacturasController extends Controller
             foreach ($articulos as $articulo) {
                 $producto = $articulo['producto'];
                 $cantidad = $articulo['cantidad'];
-                
-                if($cantidad <= 0){
+
+                if ($cantidad <= 0) {
                     abort(500, "La cantidad del producto " . $articulo['nombre'] . " debe ser mayor a 0");
                 }
 
@@ -51,14 +69,30 @@ class FacturasController extends Controller
         return response()->json('Ok');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $factura = Factura::query()
+            ->with('detalles.producto')
+            ->with('usuario')
+            ->with('estado')->findOrFail($id);
+
+        return Inertia::render('Facturas/Show', ['factura' => $factura]);
+    }
+
+    public function update(Request $request, Factura $factura)
+    {
+
+    }
+
+    public function edit($id)
+    {
+        $factura = Factura::query()
+            ->with('detalles.producto')
+            ->with('usuario')
+            ->with('estado')->findOrFail($id);
+
+        $estados = Estado::all();
+
+        return Inertia::render('Facturas/Edit', ['factura' => $factura, 'estados' => $estados]);
     }
 }

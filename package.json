@@ -20,6 +20,8 @@
         "alpinejs": "^3.2.6",
         "axios": "^0.27",
         "bootstrap": "^5.1.0",
+        "browser-sync": "^2.27.10",
+        "browser-sync-webpack-plugin": "^2.3.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
@@ -33,8 +35,6 @@
     },
     "dependencies": {
         "autoprefixer": "10.4.5",
-        "browser-sync": "^2.27.10",
-        "browser-sync-webpack-plugin": "^2.3.0",
         "sweetalert2": "^11.4.17"
     }
 }

@@ -42,6 +42,6 @@ Route::middleware([
 
     Route::resource('productos', ProductosController::class, ['only' => ['index', 'edit', 'update', 'create', 'store']]);
     Route::resource('articulos-de-venta', VentasController::class, ['only' => ['index', 'show']]);
-    Route::resource('facturas', FacturasController::class, ['only' => ['store', 'show']]);
+    Route::resource('pedidos', FacturasController::class, ['only' => ['store', 'edit', 'show', 'index', 'update']]);
 
 });

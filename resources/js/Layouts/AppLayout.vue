@@ -1,80 +1,56 @@
 <template>
   <div>
+
     <Head :title="title" />
 
     <jet-banner />
 
-    <nav
-      class="
+    <nav class="
         navbar navbar-expand-md navbar-light
         bg-white
         border-bottom
         sticky-top
-      "
-    >
+      ">
       <div class="container">
         <!-- Logo -->
         <Link class="navbar-brand me-4" :href="route('inicio')">
-          <jet-application-mark width="36" />
+        <jet-application-mark width="36" />
         </Link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav me-auto">
-            <jet-nav-link
-              :href="route('inicio')"
-              :active="route().current('inicio')"
-            >
+            <jet-nav-link :href="route('inicio')" :active="route().current('inicio')">
               Inicio
             </jet-nav-link>
-            <jet-nav-link
-              v-if="$page.props.user.admin"
-              :href="route('productos.index')"
-              :active="route().current('productos.index')"
-            >
+            <jet-nav-link v-if="$page.props.user.admin" :href="route('productos.index')"
+              :active="route().current('productos.index')">
               Productos
             </jet-nav-link>
-            <jet-nav-link
-              :href="route('articulos-de-venta.index')"
-              :active="route().current('articulos-de-venta.index')"
-            >
+            <jet-nav-link :href="route('articulos-de-venta.index')"
+              :active="route().current('articulos-de-venta.index')">
               Articulos
+            </jet-nav-link>
+            <jet-nav-link :href="route('pedidos.index')" :active="route().current('pedidos.index')">
+              Pedidos
             </jet-nav-link>
           </ul>
 
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav align-items-baseline">
             <!-- Team Management -->
-            <jet-dropdown
-              id="teamManagementDropdown"
-              v-if="$page.props.jetstream.hasTeamFeatures"
-            >
+            <jet-dropdown id="teamManagementDropdown" v-if="$page.props.jetstream.hasTeamFeatures">
               <template #trigger>
                 {{ $page.props.user.current_team.name }}
 
-                <svg
-                  class="me-2"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
+                <svg class="me-2" width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
                     d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
+                    clip-rule="evenodd" />
                 </svg>
               </template>
 
@@ -84,16 +60,11 @@
                   <h6 class="dropdown-header">Manage Team</h6>
 
                   <!-- Team Settings -->
-                  <jet-dropdown-link
-                    :href="route('teams.show', $page.props.user.current_team)"
-                  >
+                  <jet-dropdown-link :href="route('teams.show', $page.props.user.current_team)">
                     Team Settings
                   </jet-dropdown-link>
 
-                  <jet-dropdown-link
-                    :href="route('teams.create')"
-                    v-if="$page.props.jetstream.canCreateTeams"
-                  >
+                  <jet-dropdown-link :href="route('teams.create')" v-if="$page.props.jetstream.canCreateTeams">
                     Create New Team
                   </jet-dropdown-link>
 
@@ -102,30 +73,17 @@
                   <!-- Team Switcher -->
                   <h6 class="dropdown-header">Switch Teams</h6>
 
-                  <template
-                    v-for="team in $page.props.user.all_teams"
-                    :key="team.id"
-                  >
+                  <template v-for="team in $page.props.user.all_teams" :key="team.id">
                     <form @submit.prevent="switchToTeam(team)">
                       <jet-dropdown-link as="button">
                         <div class="d-flex">
-                          <svg
-                            v-if="team.id == $page.props.user.current_team_id"
-                            class="me-1 text-success"
-                            width="20"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
+                          <svg v-if="team.id == $page.props.user.current_team_id" class="me-1 text-success" width="20"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                           </svg>
                           <span class="text-truncate" style="width: 12rem">{{
-                            team.name
+                              team.name
                           }}</span>
                         </div>
                       </jet-dropdown-link>
@@ -138,30 +96,17 @@
             <!-- Authentication Links -->
             <jet-dropdown id="settingsDropdown">
               <template #trigger>
-                <img
-                  v-if="$page.props.jetstream.managesProfilePhotos"
-                  class="rounded-circle"
-                  width="32"
-                  height="32"
-                  :src="$page.props.user.profile_photo_url"
-                  :alt="$page.props.user.name"
-                />
+                <img v-if="$page.props.jetstream.managesProfilePhotos" class="rounded-circle" width="32" height="32"
+                  :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" />
 
                 <span v-else>
                   {{ $page.props.user.name }}
 
-                  <svg
-                    class="ms-2"
-                    width="18"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
+                  <svg class="ms-2" width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
                       d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    />
+                      clip-rule="evenodd" />
                   </svg>
                 </span>
               </template>
@@ -174,10 +119,7 @@
                   Profile
                 </jet-dropdown-link>
 
-                <jet-dropdown-link
-                  :href="route('api-tokens.index')"
-                  v-if="$page.props.jetstream.hasApiFeatures"
-                >
+                <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
                   API Tokens
                 </jet-dropdown-link>
 
