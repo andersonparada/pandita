@@ -79,9 +79,17 @@ class FacturasController extends Controller
         return Inertia::render('Facturas/Show', ['factura' => $factura]);
     }
 
-    public function update(Request $request, Factura $factura)
+    public function update(Request $request, $id)
     {
+        $estado_id = $request->estado_id;
 
+        DB::transaction(function () use ($estado_id, $id) {
+            $factura            = Factura::findOrFail($id);
+            $factura->estado_id = $estado_id;
+            $factura->save();
+        });
+
+        return $this->index();
     }
 
     public function edit($id)
@@ -89,7 +97,8 @@ class FacturasController extends Controller
         $factura = Factura::query()
             ->with('detalles.producto')
             ->with('usuario')
-            ->with('estado')->findOrFail($id);
+            ->with('estado')
+            ->findOrFail($id);
 
         $estados = Estado::all();
 
